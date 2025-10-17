@@ -1,0 +1,192 @@
+:root {
+  /* Colors (from JSON/screen visual) */
+  --bg-canvas: #000000;
+  --overlay-scrim: rgba(0,0,0,0.40);
+  --panel-bg: rgba(29,29,29,0.85);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.72);
+  --btn-primary-bg: #ffffff;
+  --btn-primary-text: #1f1f1f;
+  --btn-secondary-bg: rgba(255,255,255,0.10);
+  --btn-secondary-text: #ffffff;
+  --btn-border: rgba(255,255,255,0.32);
+
+  /* Shadows and borders */
+  --panel-radius: 20px;
+  --panel-shadow: 0 8px 40px rgba(0,0,0,0.45);
+  --btn-radius: 32px;
+
+  /* Typography */
+  --font-family: "Helvetica Neue", Arial, sans-serif;
+  --title-size: 32px;
+  --title-weight: 700;
+  --subtitle-size: 20px;
+  --subtitle-weight: 400;
+
+  --btn-font-size: 18px;
+  --btn-font-weight: 600;
+  --btn-line: 33px;
+
+  /* Spacing */
+  --ppi-padding-x: 48px;
+  --ppi-padding-y: 36px;
+  --ppi-gap: 32px;
+
+  /* Canvas dimensions from JSON for reference */
+  --canvas-w: 1920px;
+  --canvas-h: 1080px;
+}
+
+/* Scoped reset/sanitizer for pixel accuracy on this page */
+.screen-8, .screen-8 * {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  height: 100%;
+}
+img { display: block; max-width: none; }
+
+/* Screen root */
+.screen-8 {
+  position: relative;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  overflow: hidden;
+  margin: 0 auto;
+  background: var(--bg-canvas);
+}
+
+/* Background image sized to 1920x1080 (matches FIGMA frame) */
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Full overlay gradient (OverlayFull > Degradado_abajo) */
+.overlay-full {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  /* Bottom-emphasis gradient over a scrim */
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.40) 70%, rgba(0,0,0,0.58) 100%),
+    var(--overlay-scrim);
+  z-index: 1;
+}
+
+/* PlayerPopOption container (x:48, y:732, w:1824, h:300) */
+.player-pop-option {
+  position: absolute;
+  left: 48px;
+  top: 732px;
+  width: 1824px;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ppi-padding-y) var(--ppi-padding-x);
+  gap: var(--ppi-gap);
+  background: var(--panel-bg);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  z-index: 2;
+  backdrop-filter: blur(6px);
+}
+
+/* Left column (Frame 29365) width:1120 height:148 */
+.ppo-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 1120px;
+}
+
+/* Title (963x72 bbox) */
+.ppo-title {
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: 0;
+  color: var(--text-primary);
+}
+
+/* Subtitle (1120x48 bbox) */
+.ppo-subtitle {
+  font-size: var(--subtitle-size);
+  font-weight: var(--subtitle-weight);
+  line-height: 1.4;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Right column (Frame 29366) width:336 height:166 */
+.ppo-right {
+  width: 336px;
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  align-items: flex-end;
+}
+
+/* Buttons (RegularButton instances) exact size 336x64 */
+.btn {
+  width: 336px;
+  height: 64px;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--btn-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--btn-font-size);
+  line-height: var(--btn-line);
+  font-weight: var(--btn-font-weight);
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: transform .08s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+  user-select: none;
+  padding: 0 28px;
+  white-space: nowrap;
+}
+
+/* Primary selected: white pill with dark text */
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+/* Secondary: translucent/dark pill with white text */
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+/* Responsive downscale to keep pixel positions proportionally */
+@media (max-width: 1920px) {
+  .screen-8 {
+    transform-origin: top left;
+    transform: scale(calc(100vw / 1920));
+    height: calc(1080px * (100vw / 1920));
+  }
+  html, body {
+    height: auto;
+  }
+}

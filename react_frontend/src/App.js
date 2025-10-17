@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Screen8 from './screens/Screen8';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -16,7 +18,8 @@ function App() {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
-  return (
+  // Home content preserved as before
+  const Home = () => (
     <div className="App">
       <header className="App-header">
         <button 
@@ -41,8 +44,21 @@ function App() {
         >
           Learn React
         </a>
+        <p style={{ marginTop: 24 }}>
+          <Link className="App-link" to="/screen/8">Go to Screen 8</Link>
+        </p>
       </header>
     </div>
+  );
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* New route for pixel-accurate screen */}
+        <Route path="/screen/8" element={<Screen8 />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
