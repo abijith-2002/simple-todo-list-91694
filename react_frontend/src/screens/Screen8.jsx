@@ -14,7 +14,8 @@ export default function Screen8() {
   /** Render the PlayerPopOption overlay with two-button selection behavior. */
 
   // Selection state mirrors the original JS toggle between primary and secondary
-  const [selected, setSelected] = useState<'primary' | 'secondary'>('primary');
+  // Note: This is a plain JSX file, so we avoid TypeScript generic syntax here.
+  const [selected, setSelected] = useState('primary');
 
   // Maintain aria-pressed consistency with state
   const isPrimarySelected = selected === 'primary';
